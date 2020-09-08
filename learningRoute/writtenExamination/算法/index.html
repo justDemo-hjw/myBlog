@@ -1,0 +1,62 @@
+<!--
+ * @Date: 2020-07-17 17:05:02
+ * @LastEditors: hanjiawang
+ * @LastEditTime: 2020-07-17 17:19:29
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  /*
+ * @Date: 2020-07-17 15:40:16
+ * @LastEditors: hanjiawang
+ * @LastEditTime: 2020-07-17 17:03:15
+*/
+let root = {
+  val: 'A',
+  left: {
+    val: 'B',
+    left: {
+      val: 'D',
+      left: null,
+      right: null
+    },
+    right: {
+      val: 'E',
+      left: null,
+      right: null
+    }
+  },
+  right: {
+    val: 'C',
+    left: null,
+    right: {
+      val: 'F',
+      left: null,
+      right: null
+    }
+  }
+}
+
+// function beforePoints(tree) {
+//   if(!tree.left && !tree.right) {
+//     return tree.val
+//   }else {
+//     return tree.val +  !!tree.left && beforePoint(tree.left) + !!tree.right && beforePoint(tree.right)
+//   }
+// }
+function beforePoint(tree) {
+  if(!tree) return
+  return tree.var + beforePoint(tree.left) + beforePoint(tree.right)
+}
+
+console.log(beforePoint(root))
+</script>
+</html>

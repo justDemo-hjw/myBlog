@@ -1,0 +1,77 @@
+<!--
+ * @Date: 2020-06-04 08:27:33
+ * @LastEditors: hanjiawang
+ * @LastEditTime: 2020-06-04 09:32:40
+--> 
+<!--  题目：有一张90*90的图片，上面一共有9个30*30表情，写一个React/Vue的组件，实现一个表情水平垂直居中，并且每10s切换一次表情 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    html body {
+      height: 872px;
+    }
+    .main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: aqua;
+      height: 100%;
+      width: 100%;
+    }
+    .main-img {
+      height: 30px;
+      width: 30px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="spriteChart" class="main">
+    <div class="main-img">
+      <img :style="imgPosition" src="../image/emojiSprite.png"/>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#spriteChart',
+      data: function() {
+        return {
+          imgPosition: {
+            position: 'relative',
+            right: '0px',
+            bottom: '0px',
+            width: '90px',
+            // 'background-position': '0px 0px',
+            // 'background': "url('../image/emojiSprite.png')no-repeat",
+            height: '90px'
+          }
+        }
+      },
+      methods: {
+        changeImg() {
+          this.imgPosition.right = Math.floor(Math.random()*3)*30 + 'px'
+          this.imgPosition.bottom = Math.floor(Math.random()*3)*30 + 'px'
+          // this.imgPosition['background-position'] = `${'30px'} ${'30px'}`
+        }
+      },
+      created: function() {
+        this.time = setInterval(() => {
+          this.changeImg()
+        }, 1000);
+      },
+      beforeDestroy: function() {
+        clearInterval(this.time)
+      }
+    })
+  </script>
+</body>
+</html>
