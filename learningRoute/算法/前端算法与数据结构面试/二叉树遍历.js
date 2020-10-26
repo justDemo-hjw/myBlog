@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-07-17 15:40:16
  * @LastEditors: hanjiawang
- * @LastEditTime: 2020-07-25 15:21:51
+ * @LastEditTime: 2020-10-24 10:53:36
  */
 let root = {
   val: 'A',
@@ -29,11 +29,11 @@ let root = {
   },
 }
 //先序，中序和后序修改tree.val的位置就好
-// function beforePoints(tree) {
-//   if(!tree) {
-//     return ''
-//   }else {
-//     return tree.val + beforePoints(tree.left) + beforePoints(tree.right)
-//   }
-// }
+function beforePoints(tree) {
+  if(!tree) {
+    return ''
+  }else {
+    return tree.val + beforePoints(tree.left) + beforePoints(tree.right)
+  }
+}
 beforePoints()
