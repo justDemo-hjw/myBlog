@@ -1,7 +1,7 @@
 /*
  * @Date: ,: 2020-10-20 11:12:09
  * @LastEditors: hanjiawang
- * @LastEditTime: 2020-10-24 10:53:20
+ * @LastEditTime: 2021-04-06 15:53:34
 */
 // 题目描述：给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
 
@@ -15,7 +15,6 @@
 // [1,3],
 // [1,4],
 // ]
-
 const combine = function(n, k) {
     // 初始化结果数组
     const res = []   

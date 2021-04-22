@@ -1,0 +1,73 @@
+<!--
+ * @Date: 2021-04-06 11:39:14
+ * @LastEditors: hanjiawang
+ * @LastEditTime: 2021-04-06 11:55:18
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+    <img data-src="/1.jpg">
+  </div>
+  <script>
+    const imgs = document.getElementsByTagName('img')
+    const viewHeight = window.innerHeight
+    let num = 0
+    function lazyLoad() {
+      for(let i=num; i<imgs.length; i++) {
+        let distance = viewHeight - imgs[i].getBoundingClientRect().top
+        if(distance > 0) {
+          imgs[i].src = imgs[i].getAttribute('data-src')
+          num = num + 1
+        }
+      }
+    }
+    function throttle(fn, delay) {
+      let timer = null
+      let last = 0
+      return function() {
+        const context = this
+        const args = arguments
+        const now = +new Date()
+        if(now - last < delay) {
+          if(timer) {
+            clearTimeout(timer)
+          }
+          timer = setTimeout(()=> {
+            fn.apply(context, args)
+          }, delay)
+        }else {
+          last = now
+          fn.apply(context, args)
+        }
+      }
+    }
+    const delayLazyLoad = throttle(lazyLoad, 1000)
+    window.addEventListener('scroll', delayLazyLoad, false)
+  </script>
+</body>
+</html>

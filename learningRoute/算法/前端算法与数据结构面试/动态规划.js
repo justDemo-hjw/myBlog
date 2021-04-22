@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-11-02 14:39:28
  * @LastEditors: hanjiawang
- * @LastEditTime: 2020-11-02 15:11:44
+ * @LastEditTime: 2021-04-06 21:06:49
 */
 // 题目描述：假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
 // 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
@@ -25,14 +25,14 @@
 // 1、递归（树的思想实现）
 const climbStairs = function(n) {
   // 处理递归边界
-  if(n === 1) {
-      return 1
-  }
-  if(n === 2){
-      return 2
-  }
-  // 递归计算
-  return climbStairs(n-1) + climbStairs(n-2)
+    if(n === 1) {
+        return 1
+    }
+    if(n === 2){
+        return 2
+    }
+    // 递归计算
+        return climbStairs(n-1) + climbStairs(n-2)
 };
 // 2、递归+记忆化搜索（第一种重复计算的过多）
 // 定义记忆数组 f
@@ -52,17 +52,13 @@ const climbStairs2 = function(n) {
 
 // 3、动态规划思想，自底向上实现递归
 const climbStairs = function(n) {
-  // 初始化状态数组
-  const f = [];
-  // 初始化已知值
-  f[1] = 1;
-  f[2] = 2;
-  // 动态更新每一层楼梯对应的结果
-  for(let i = 3;i <= n;i++){
-      f[i] = f[i-2] + f[i-1];
-  }
-  // 返回目标值
-  return f[n];
+    const f = []
+    f[1] = 1
+    f[2] = 2
+    for(let i=3; i<=n; i++) {
+        f[i] = f[i-1] + f[i-2]
+    }
+    return f[n]
 };
 
 // “最值”型问题典范：如何优雅地找硬币
@@ -77,26 +73,18 @@ const climbStairs = function(n) {
 // 提示：最值问题是动态规划的常见对口题型，见到最值问题，应该想到动态规划
 const coinChange = function(coins, amount) {
   // 用于保存每个目标总额对应的最小硬币个数
-  const f = []
-  // 提前定义已知情况
-  f[0] = 0
-  // 遍历 [1, amount] 这个区间的硬币总额
-  for(let i=1;i<=amount;i++) {
-      // 求的是最小值，因此我们预设为无穷大，确保它一定会被更小的数更新
-      f[i] = Infinity
-      // 循环遍历每个可用硬币的面额
-      for(let j=0;j<coins.length;j++) {
-          // 若硬币面额小于目标总额，则问题成立
-          if(i-coins[j]>=0) {
-              // 状态转移方程
-              f[i] = Math.min(f[i],f[i-coins[j]]+1)
-          }
-      }
-  }
-  // 若目标总额对应的解为无穷大，则意味着没有一个符合条件的硬币总数来更新它，本题无解，返回-1
-  if(f[amount]===Infinity) {
-      return -1
-  }
-  // 若有解，直接返回解的内容
-  return f[amount]
+    const f = []
+    f[0] = 0
+    for(let i=1; i<amount; i++) {
+        f[i] = Infinity
+        for(let j=0; j<coins.length; j++) {
+            if(i >= coins[j]) {
+                f[i] = Math.min(f[i], f[i-coins[j]+1])
+            }
+        }
+    }
+    if(f[amount]===Infinity) {
+        return -1
+    }
+    return f[amount]
 };

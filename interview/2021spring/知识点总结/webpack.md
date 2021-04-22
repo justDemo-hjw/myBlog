@@ -1,0 +1,90 @@
+<!--
+ * @Date: 2021-04-01 18:24:02
+ * @LastEditors: hanjiawang
+ * @LastEditTime: 2021-04-21 11:59:11
+-->
+- 使用webpack做过什么
+   - 区分开发环境和线上环境做不同配置
+   - 基本配置
+      - css
+        - style-loader（将css文件注入到heade标签下面）, css-loader（将各个css文件合并在一起）, postcss-loader（对css加上浏览器前缀）, less-loader（解析less）
+      - js
+        - babel-loader, @babel/preset-env（es6转es5）
+      - html
+        - HtmlWebpackPlugin输出html作为载体
+      - vue
+        - vue-loader
+        - vue-style-loader
+      - 图片字体等文件
+        - file-loader结合url-loader使用，当没有超出limit限制的大小时使用url-loader将图片转化为base64的形式，超出使用file-loader输出文件到打包目录
+   - 开发环境
+      - 文件热更新：配置dev-server结合hmr插件使用，谈谈原理
+   - 线上环境
+      - 代码压缩混淆，使用UglifyJsPlugin压缩js，开启sourceMap方便调试
+      - 压缩css
+      - sourceMap
+      - 去除console
+      - 构建前清除上一次构建的内容
+   - 对webpack打包速度的优化
+      - 设置mode参数，production时会进行tree-shaking和uglifyjs
+      - 缩小文件匹配范围
+         - babel添加extensions，避免遍历node_modules
+         - 配置alise文件别名，当引用的时候webpack会向上递归搜索，直接告诉他找哪里
+         - include exclude减少loader搜索转化时间
+         - noParse，当引入一个包时，webpack会解析这个包查看是否有依赖其他的包，增加noParse告诉他不必解析
+      - happyPack开启多进程Loader转换，主要的时间都在loader解析上，开启happyPack将这部分任务分解到多个子进程中并行处理，子进程处理完把结果发送到主进程中，从而减少总构建时间
+      - 抽离第三方模块，新建一个webpack.dll.condig.js中将vue等第三方包抽离打包使用DllPlugin，在html中引入这个输出的js文件，平时打包的时候不执行dll命令，第三方包更新再执行
+      - 配置缓存，cache-loader配置缓存，在性能开销较大的loader前用这个，会比对文件有没有变化，没变化直接使用缓存
+   - 对打包的体积进行优化
+      - webpack-bundle-analyzer对包体积监控
+      - tree-shaking
+- 常见的Loader，作用是什么
+   - raw-loader: 加载文件原始内容，可将文件作为字符串带入
+   - file-loader: 处理文件和图片，将文件输出到文件夹，代码中通过url引入
+   - style-loader
+   - css-loader
+   - sass/less-loader
+   - babel-loader
+- 常见plugin
+- Loader Plugin区别
+   - 由于webpack只能识别JS和JSON文件，所以需要Loader进行转译；Loader是一个函数，对接收到的内容进行转换，返回转换后的结果，链式调用时第一个Loader返回的结果会作为第二个Loader的入参；在module.rules中配置，通过test匹配文件，loader指定loader，options传入配置信息
+   - Plugin是插件，通过构造函数引入，基于事件流框架 Tapable；主要是在webpack运行过程中监听其生命周期广播出来的事件，在合适的时机通过webpack提供的api改变输出的结果；在Plugins数组中配置，参数通过构造函数传入
+- webpack构建流程
+   - 初始化参数：从配置文件和shell语句中读取与合并参数，得出最后的参数
+   - 开始编译：根据参数初始化compiler对象，加载所有配置的插件，调用对象的run方法开始编译
+   - 确定入口：根据配置文件找到所有的entry入口文件
+   - 编译模块：从入口文件开始，调用所有loader对模块进行翻译，再找出该模块依赖的模块，递归翻译，直到所有文件经过loader处理
+   - 完成模块编译：loader翻译完所有模块后，得到翻译完的文件和他们之间的依赖关系
+   - 输出资源：根据入口文件和模块之间的关系，组装成一个个包含多个模块的Chunk，再把每个Chunk转换为一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会
+   - 输出完成：在确定好输出内容后，根据配置文件确定输出的路径和文件名，把文件内容写入到文件系统
+   - 在以上过程中webpack会在特定的时间点广播出特定的事件，插件可以监听，并且可以调用webpack提供的api改变webpack的运行结果
+- webpack提高效率的插件
+   - webpack-dashboard：
+   - webpack-merge
+   - speed-measure-webpack-plugin
+   - size-plugin
+   - HotModuleReplacementPlugin
+- source map是什么生产环境怎么用
+   - 作用：将编译、打包、压缩过的代码还原为源代码的过程，由于打包后的代码没有可读性不方便调试，想调试源码需要使用source map，map文件只有打开开发者工具后才会加载
+   - hidden-source-map：借助第三方监控平台使用
+   - nosources-scource-map：只显示具体行数以及查看源代码的错误栈，安全性比sourcemap高
+   - sourcemap：可以使用nginx将.map文件只对白名单开放（公司内网）
+- 模块化打包原理
+   - webpack
+- 文件监听原理
+   - 开启文件监听，webpack.config.js中watch参数设置为true，或者执行webpack时添加--watch参数
+   - 轮询检查文件最后修改时间是否变化，发生变化不会立即打包，而是先缓存起来等到设置的aggregateTimeout时间过了一起执行
+   - 缺点是要手动刷新浏览器
+- 热更新原理，可以做到不用刷新浏览器就将新变更的模块替换掉旧的模块
+   - hmr，vue-loader
+   - webpack-dev-server和浏览器建立websocket连接，开启watch，将文件打包到内存，监听compiler的done事件，将hash值发送给浏览器，通知其更新
+   - 浏览器给wds发送ajax请求获取到文件列表和对应的hash值
+   - 浏览器发送jsonp请求hash值对应的文件，进行更新
+- 编写loader流程
+   - 遵循单一职责，链式调用，统一原则（输入和输出都是字符串，各个Loader完全独立）
+   - 将源代码解析成AST（将字符串变成带标记信息的对象，抽象语法树）
+   - 对AST节点进行递归遍历，生成便于操作转换的path对象，对AST节点进行操作，判断节点是不是console对象，是的话调用path.remove()删除
+   - 将AST解码生成js代码输出
+- tree-shaking
+   - 通过es6的静态引入import的模块，查找其中未使用的模块，标记其中无副作用的部分未dead-code；然后可以通过UglifyJSPlugin清除
+   - 问题：只处理函数和顶层的import export变量，不能将未使用的类的方法删除掉，require进来的模块无效，因为是动态引入的；整个导入的模块也是不支持的

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-19 19:59:50
  * @LastEditors: hanjiawang
- * @LastEditTime: 2020-10-19 20:45:32
+ * @LastEditTime: 2021-04-06 15:45:45
 */
 // 题目描述：给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
 // 说明：解集不能包含重复的子集。
@@ -27,7 +27,6 @@ const subsets = function(nums) {
   const subset = []
   // 进入 dfs
   dfs(0)  
-
   // 定义 dfs 函数，入参是 nums 中的数字索引
   function dfs(index) {
       // 每次进入，都意味着组合内容更新了一次，故直接推入结果数组
@@ -43,6 +42,6 @@ const subsets = function(nums) {
       }
   }
   // 返回结果数组
-  return res 
+  return res
 };
 console.log(subsets([1,2]))

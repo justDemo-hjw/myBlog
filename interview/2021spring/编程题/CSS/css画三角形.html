@@ -1,0 +1,30 @@
+<!--
+ * @Date: 2021-04-14 08:54:54
+ * @LastEditors: hanjiawang
+ * @LastEditTime: 2021-04-14 09:28:26
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 总结
+      一条横竖边，设置横竖边border-方向: px solid red，其他边用border-方向: px solid transparent
+      两条横竖边，若斜边是在三角形的右边，这时候设置top或bottom的直线，和右边的斜线。若斜边是在三角形的左边，这时候设置top或bottom的直线，和左边的斜线
+     */
+    .triangle {
+      width: 0;
+      height: 0;
+      border-top: 100px solid red;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="triangle"></div>
+</body>
+</html>

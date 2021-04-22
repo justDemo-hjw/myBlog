@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-22 16:43:11
  * @LastEditors: hanjiawang
- * @LastEditTime: 2020-09-22 17:13:32
+ * @LastEditTime: 2021-04-07 17:59:49
  */
 // 题目描述：给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
 
@@ -46,5 +46,5 @@ const isValid = function (str) {
       }
     }
   }
-  return !str.length
+  return !stack.length
 }

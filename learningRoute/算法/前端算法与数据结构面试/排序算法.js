@@ -1,22 +1,10 @@
 /*
  * @Date: 2020-10-27 14:04:34
  * @LastEditors: hanjiawang
- * @LastEditTime: 2020-10-28 19:01:14
+ * @LastEditTime: 2021-04-01 20:57:19
 */
 // 冒泡排序，时间复杂度O(n2)，最好时间复杂度O(n)
-// 循环便利两个相邻元素，每次确定一个最大值，便利n次确定最终结果
-function bubbleSort(arr) {
-  const len = arr.length
-  for(let i=0; i<len; i++) {
-    for(let j=0; j<len-1; j++) {
-      if(arr[j] > arr[j+1]) {
-        [arr[j], arr[j+1]] = [arr[j+1], arr[j]]
-      }
-    }
-  }
-  return arr
-}
-
+// 循环遍历两个相邻元素，每次确定一个最大值，遍历n次确定最终结果
 function butterBubbleSort(arr) {
   const len = arr.length
   for(let i=0; i<len; i++) {

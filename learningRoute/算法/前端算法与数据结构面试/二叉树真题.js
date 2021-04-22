@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-24 11:11:20
  * @LastEditors: hanjiawang
- * @LastEditTime: 2020-10-26 10:50:29
+ * @LastEditTime: 2021-04-06 18:09:29
 */
 // 题目描述：给定一个二叉树，返回它的前序（先序）遍历序列。
 
@@ -158,16 +158,10 @@ const levelOrder = function(root) {
  * @return {TreeNode}
  */
 const invertTree = function(root) {
-  // 定义递归边界
-  if(!root) {
-      return root;
-  }
-  // 递归交换右孩子的子结点
-  let right = invertTree(root.right);
-  // 递归交换左孩子的子结点
-  let left = invertTree(root.left);
-  // 交换当前遍历到的两个左右孩子结点
-  root.left = right;
-  root.right = left;
-  return root;
+  if(!root) return
+  let left = invertTree(root.left)
+  let right = invertTree(root.right)
+  root.left = right
+  root.right = left
+  return root
 };
