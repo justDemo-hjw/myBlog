@@ -1,67 +1,8 @@
 /*
  * @Date: 2021-04-05 10:31:00
  * @LastEditors: hanjiawang
- * @LastEditTime: 2021-04-16 17:07:13
+ * @LastEditTime: 2021-04-22 16:50:39
 */
-Function.prototype.myCall = function(content, ...args) {
-  content = content || window
-  content.fn = this
-  const result = content.fn(...args)
-  delete content.fn
-  return result
-}
-
-Function.prototype.myApply = function(content, args) {
-  content = content || window
-  content.fn = this
-  const result = content.fn(args)
-  delete content.fn
-  return result
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Function.prototype.myCall = function(context, ...arg) {
   context = context || window
   context.fn = this

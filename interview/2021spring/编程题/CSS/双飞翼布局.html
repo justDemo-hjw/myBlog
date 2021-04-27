@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-04-16 09:38:44
  * @LastEditors: hanjiawang
- * @LastEditTime: 2021-04-16 09:52:11
+ * @LastEditTime: 2021-04-22 16:05:36
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -12,31 +12,28 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    .main {
-      height: 600px;
-    }
     .center {
-      height: 100%;
       width: 100%;
-      background-color: cyan;
+      height: 600px;
+      background-color: yellow;
       float: left;
     }
     .center .inner {
       margin: 0 200px;
     }
     .left {
+      background-color: red;
+      height: 400px;
+      width: 200px;
       float: left;
       margin-left: -100%;
-      background-color: red;
-      width: 200px;
-      height: 400px;
     }
     .right {
+      height: 400px;
+      width: 200px;
       float: left;
       margin-left: -200px;
-      background-color: red;
-      width: 200px;
-      height: 400px;
+      background-color: blue;
     }
   </style>
 </head>
@@ -44,10 +41,10 @@
 <body>
   <div class="main">
     <div class="center">
-      <div class="inner">111111</div>
+      <div class="inner">中间</div>
     </div>
-    <div class="left"></div>
-    <div class="right"></div>
+    <div class="left">左面</div>
+    <div class="right">右面</div>
   </div>
 </body>
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-03-30 17:00:28
  * @LastEditors: hanjiawang
- * @LastEditTime: 2021-04-19 17:42:08
+ * @LastEditTime: 2021-04-23 11:56:32
 -->
 ### CSS
 - CSS3新特性
@@ -25,7 +25,9 @@
   - 兼容性，@import IE5 之上可用，link 则都支持
 
 - CSS 的优先级
-  !important>行内样式>id 选择器>类选择器>标签选择器>通配符选择器>继承属性>默认
+  - !important>行内样式>id 选择器>类选择器、属性选择器、伪类选择器>标签选择器、伪元素选择器>通配符选择器、子选择器、相邻选择器、同胞选择器>继承属性>默认
+  - 行内样式1000 id100 类10 标签选择器1 通配符选择器0
+  - 比较过程，先比较同级的大小，不同直接得出结果，下一级的再多优先级也是上一级的有效，比如一个id选择器是100那么11个类选择器也吵不过id选择器的优先级，所以要同级比较不能把所有的权重加起来比较
 
 - 盒模型
   - content-box:宽高包含内容部分大小
@@ -48,6 +50,8 @@
   - static，正常文档流，默认值；
   - relative，相对布局，通过 top、bottom、left、right 可相对元素在文档流中的位置移动；不脱离文档流；
   - absolute，绝对布局，通过 top、bottom、left、right 可相对 position 属性不为 static 的父元素在文档流中的位置移动；脱离文档流；
+    - 未配置top等位置属性时脱离文档流的位置和它本身无定位属性的位置和display值有关
+    - 如果未设置absolute时是内联元素，则和内联元素在同一行显示，若是块级元素则跨行显示
   - fixed，绝对布局，通过 top、bottom、left、right 可相对浏览器窗口的位置移动；脱离文档流；
 
 - BFC（什么是 BFC，BFC 的特性，BFC 的创建，BFC 的应用）
@@ -57,15 +61,14 @@
     - html 标签
     - float!==none
     - position（fixed、absolute）
-    - overflow!==visible
-    - 行内块元素 display=inline-block
-    - display 为 table 或 table-cell 或 table-caption 或 inline-table
+    - overflow!==visible（hidden、scroll、auto）
+    - display inline-block flex、grid、flow-root（专门用来设置BFC的）
   - BFC 的特性
     - 同一 BFC 下的块级元素垂直排列
     - 同一 BFC 下的相邻块级元素垂直外边距重叠
     - BFC 中高度计算包含浮动元素的高度
     - BFC 不会与浮动元素重叠
-    - 一个 BFC 下的子元素左边 margin 和包含块左边 border 接触
+    - 一个 BFC 下的子元素左边 margin 和包含块左边缘（根据盒子类型，conten-tbox是content边缘、border-box是border的边缘、padding-box是padding的边缘）接触
   - BFC 的应用
     - 清除浮动；BFC 中高度计算包含浮动元素的高度
     - 避免垂直外边距重叠；创建新的 BFC 使子元素处于新 BFC 中就不会与之前 BFC 的元素重叠垂直外边距
@@ -73,15 +76,19 @@
 
 - 元素的浮动（什么是浮动，浮动的作用，怎么触发，缺点，为什么清除浮动，几种清除浮动的方法）
   - 元素设置 float 属性为 left/right，元素脱离文档流，向左/右浮动，直到碰到父元素或其他浮动元素
-  - 诞生为了实现文字环绕（图片设置浮动就会文字环绕），主要应用于自适应多栏布局
-  - 若父元素无高度，会造成父元素高度塌陷
+  - 特点
+    1. 元素设置浮动display属性会变成block，并创建新的BFC，宽度不再是沾满父元素，而是包裹效果，宽度有本身大小决定
+    2. 行级盒子不能和浮动元素重叠，实现文字环绕
+    3. 脱离文档流：在其后面的非浮动块级盒子会和浮动元素重叠，会造成父元素高度塌陷
+  - 脱离文档流，若父元素无高度，会造成父元素高度塌陷
   - 清除浮动
-    - 加一个空 div，css 属性设置为 clear: both，原理为创建新元素让他左右没有浮动元素，也就是处于浮动元素下方，父元素计算高度会算上这个元素，也就解决了高度塌陷的问题
+    - 加一个空 div，css 属性设置为 clear: both，clear属性有四个参数left,right,both和none，用于块级盒子是否在目标方向可以和浮动元素重叠；原理为创建新元素让他左右没有浮动元素，效果处于浮动元素下方，父元素计算高度会算上这个元素，也就解决了高度塌陷的问题
     - 创建父元素 BFC，BFC 计算高度会把浮动元素包含在内
     - ``` 
     .parent::after{
       content: '',
-      clear: both
+      clear: both,
+      display: block; //注意clear只对块级盒子有效
     }
     ```
 
@@ -115,6 +122,6 @@
   - em大小font-size相对于父级font-size，其他相对于本身的font-size
     - 响应式实现不同屏幕大小下现实不同字体大小
   - rem大小作用于非根元素相对于html根元素font-size，作用于根元素相当于初始大小16px
-    - 找一个基准值，让1rem等于屏幕的百分之多少，然后设计稿上面的元素除去1rem代表的px值得出是多少rem实现响应式
+    - 在设计稿宽度下找一个基准值，让1rem等于100px，然后监听窗口变化，用宽度/设计稿*基准值得出html根元素font-size值，实现自适应
     - 问题是字体会继承，如果不每个字体显示设置就会有问题，可以利用媒体查询不同屏幕大小下body标签设置不同的字体默认大小
     - 配合postcss-px2rem实现，plugins实现

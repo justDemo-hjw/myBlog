@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-27 14:04:34
  * @LastEditors: hanjiawang
- * @LastEditTime: 2021-04-01 20:57:19
+ * @LastEditTime: 2021-04-27 07:15:20
 */
 // 冒泡排序，时间复杂度O(n2)，最好时间复杂度O(n)
 // 循环遍历两个相邻元素，每次确定一个最大值，遍历n次确定最终结果
@@ -26,7 +26,7 @@ function selectSort(arr) {
   const len = arr.length
   for(let i=0; i<len-1; i++) {
     let minIndex = i
-    for(let j=j; j<len; j++) {
+    for(let j=i; j<len; j++) {
       if(arr[j] < arr[i]) {
         minIndex = arr[j]
       }

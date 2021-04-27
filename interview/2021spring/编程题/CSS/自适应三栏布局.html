@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-04-07 21:47:15
  * @LastEditors: hanjiawang
- * @LastEditTime: 2021-04-16 08:47:27
+ * @LastEditTime: 2021-04-23 17:36:13
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -9,21 +9,25 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style>
-    .container{
-      position: relative;
+    .container {
+      background-color: red;
+    }
+    .middle-box {
+      overflow: hidden;
     }
     .middle{
       background:yellow;
+      /* width: calc(100% - 400px); */
     }
     .left{
       width:200px;
-      background:pink;
       float: left;
+      background:pink;
     }
     .right{
-      background: aqua;
-      width:300px;
+      width:200px;
       float: right;
+      background: aqua;
     }
 	</style>
 </head>
@@ -32,6 +36,8 @@
       <div class="left">左边</div>
       <div class="right">右边</div>
       <div class="middle">中间部分</div>
+      <!-- <div class="middle-box"> -->
+      <!-- </div> -->
     </div>
 </body>
 </html>
